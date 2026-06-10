@@ -19,7 +19,7 @@ const STATS: readonly StatCard[] = [
   },
   {
     label: "Problem Areas",
-    value: "13",
+    value: "17",
     description: "Identified from the strategic problem statement",
     icon: AlertCircle,
     color: "text-orange-600 bg-orange-100",
