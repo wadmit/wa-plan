@@ -3,4 +3,7 @@ export const ROUTES = {
   LOGIN: "/login",
   REGISTER: "/register",
   DASHBOARD: "/dashboard",
+  ROADMAP: "/roadmap",
+  KB: "/kb",
+  KB_SITE: (id: string) => `/kb/${id}`,
 } as const;
