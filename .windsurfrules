@@ -1,0 +1,8 @@
+- All components go in src/components. UI primitives in ui/, shared layout in common/, feature-specific in features/<feature-name>/
+- All TanStack Query hooks go in src/queries/<feature>/
+- All route strings must use ROUTES constant from src/constants/routes.ts
+- All API endpoint strings must use ENDPOINTS from src/lib/api/endpoints.ts
+- Use cn() from src/lib/utils.ts for all className merging
+- TypeScript strict mode is on — no `any`
+- Prefer named exports over default exports for components
+- Every new feature folder must have an index.ts barrel file
