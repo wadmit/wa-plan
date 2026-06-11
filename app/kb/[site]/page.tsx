@@ -8,6 +8,7 @@ import { SITES } from "@/data/sites";
 import { ROUTES } from "@/constants/routes";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { DocsLayout } from "@/components/common/docs-layout";
 import { OverviewTab } from "@/components/features/kb/overview-tab";
 import { ModulesTab } from "@/components/features/kb/modules-tab";
 import { FeaturesTab } from "@/components/features/kb/features-tab";
@@ -33,7 +34,6 @@ export default function KbSitePage({ params }: PageProps) {
   const site = SITES.find((s) => s.id === siteId);
   const [audienceView, setAudienceView] = useState<"business" | "engineering">("engineering");
 
-  // Check for query param audience preference
   useEffect(() => {
     const url = new URL(window.location.href);
     const audience = url.searchParams.get("audience");
@@ -49,16 +49,13 @@ export default function KbSitePage({ params }: PageProps) {
   const criticalCount = site.techDebt.filter((d) => d.severity === "critical").length;
 
   return (
-    <div
-      className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8"
-      style={{ backgroundColor: 'var(--color-bg)' }}
-    >
+    <DocsLayout>
       {/* Breadcrumb */}
       <div className="mb-6">
         <Link
           href={ROUTES.KB}
           className="mb-4 inline-flex items-center gap-1.5 text-sm hover:underline"
-          style={{ color: 'var(--color-text-dim)' }}
+          style={{ color: 'var(--text-muted)' }}
         >
           <ArrowLeft className="h-4 w-4" />
           Knowledge Base
@@ -67,7 +64,7 @@ export default function KbSitePage({ params }: PageProps) {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <h1 className="text-2xl font-bold" style={{ color: 'var(--color-text-primary)' }}>
+              <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
                 {site.name}
               </h1>
               <Badge variant={statusVariant(site.status)}>{site.status}</Badge>
@@ -80,7 +77,7 @@ export default function KbSitePage({ params }: PageProps) {
               target="_blank"
               rel="noopener noreferrer"
               className="mt-1 inline-flex items-center gap-1 text-sm hover:underline"
-              style={{ color: 'var(--color-text-dim)' }}
+              style={{ color: 'var(--text-muted)' }}
             >
               {site.url}
               <ExternalLink className="h-3 w-3" />
@@ -90,14 +87,14 @@ export default function KbSitePage({ params }: PageProps) {
           {/* Audience Toggle */}
           <div
             className="flex rounded-lg border p-1"
-            style={{ borderColor: 'var(--color-border)' }}
+            style={{ borderColor: 'var(--border-default)' }}
           >
             <button
               onClick={() => setAudienceView("business")}
               className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-all"
               style={{
-                backgroundColor: audienceView === "business" ? 'var(--color-accent)' : 'transparent',
-                color: audienceView === "business" ? '#0B0F1A' : 'var(--color-text-secondary)',
+                backgroundColor: audienceView === "business" ? 'var(--accent-primary)' : 'transparent',
+                color: audienceView === "business" ? 'var(--bg-primary)' : 'var(--text-secondary)',
               }}
             >
               <Briefcase className="h-3.5 w-3.5" />
@@ -107,8 +104,8 @@ export default function KbSitePage({ params }: PageProps) {
               onClick={() => setAudienceView("engineering")}
               className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-all"
               style={{
-                backgroundColor: audienceView === "engineering" ? 'var(--color-accent)' : 'transparent',
-                color: audienceView === "engineering" ? '#0B0F1A' : 'var(--color-text-secondary)',
+                backgroundColor: audienceView === "engineering" ? 'var(--accent-primary)' : 'transparent',
+                color: audienceView === "engineering" ? 'var(--bg-primary)' : 'var(--text-secondary)',
               }}
             >
               <Code className="h-3.5 w-3.5" />
@@ -122,9 +119,9 @@ export default function KbSitePage({ params }: PageProps) {
       {audienceView === "business" && site.plainEnglishPurpose && (
         <div
           className="mb-6 rounded-lg border p-4"
-          style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface)' }}
+          style={{ borderColor: 'var(--border-default)', backgroundColor: 'var(--bg-secondary)' }}
         >
-          <p className="text-sm italic" style={{ color: 'var(--color-text-secondary)' }}>
+          <p className="text-sm italic" style={{ color: 'var(--text-secondary)' }}>
             {site.plainEnglishPurpose}
           </p>
         </div>
@@ -134,13 +131,13 @@ export default function KbSitePage({ params }: PageProps) {
       <div className="mb-6 flex flex-wrap gap-2">
         <span
           className="rounded-lg border px-3 py-1.5 text-xs font-medium"
-          style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-secondary)' }}
+          style={{ borderColor: 'var(--border-default)', color: 'var(--text-secondary)' }}
         >
           {site.framework}
         </span>
         <span
           className="rounded-lg border px-3 py-1.5 text-xs font-medium"
-          style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-secondary)' }}
+          style={{ borderColor: 'var(--border-default)', color: 'var(--text-secondary)' }}
         >
           {site.moduleCount} modules
         </span>
@@ -148,7 +145,7 @@ export default function KbSitePage({ params }: PageProps) {
           <span
             key={t}
             className="rounded-lg border px-3 py-1.5 text-xs font-medium"
-            style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-dim)' }}
+            style={{ borderColor: 'var(--border-default)', color: 'var(--text-muted)' }}
           >
             {t.split(" ")[0]}
           </span>
@@ -156,7 +153,7 @@ export default function KbSitePage({ params }: PageProps) {
         {site.techStack.length > 3 && (
           <span
             className="rounded-lg border px-3 py-1.5 text-xs font-medium"
-            style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-dim)' }}
+            style={{ borderColor: 'var(--border-default)', color: 'var(--text-muted)' }}
           >
             +{site.techStack.length - 3}
           </span>
@@ -178,7 +175,7 @@ export default function KbSitePage({ params }: PageProps) {
               {criticalCount > 0 && (
                 <span
                   className="ml-1.5 rounded-full px-1.5 py-0.5 text-xs font-bold"
-                  style={{ backgroundColor: 'var(--color-danger)', color: 'white' }}
+                  style={{ backgroundColor: 'var(--status-danger)', color: 'white' }}
                 >
                   {criticalCount}
                 </span>
@@ -219,6 +216,6 @@ export default function KbSitePage({ params }: PageProps) {
           <EnhancementTab site={site} />
         </TabsContent>
       </Tabs>
-    </div>
+    </DocsLayout>
   );
 }

@@ -18,40 +18,82 @@ export function RiskAreasTab({ site }: RiskAreasTabProps) {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-xl border border-orange-200 bg-orange-50 p-4 dark:border-orange-800/50 dark:bg-orange-950/20">
-        <div className="flex items-center gap-2 text-sm font-semibold text-orange-800 dark:text-orange-300">
+      {/* Warning Banner */}
+      <div
+        className="rounded-lg border-l-4 p-4"
+        style={{
+          borderColor: 'var(--status-warning)',
+          backgroundColor: 'var(--bg-secondary)',
+        }}
+      >
+        <div
+          className="flex items-center gap-2 text-sm font-semibold"
+          style={{ color: 'var(--status-warning)' }}
+        >
           <ShieldAlert className="h-4 w-4" />
           High-coupling regression risk areas — touch carefully. Changes here affect many dependents.
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+      {/* Risk Table */}
+      <div
+        className="overflow-hidden rounded-lg border"
+        style={{ borderColor: 'var(--border-default)', backgroundColor: 'var(--bg-secondary)' }}
+      >
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800">
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 w-24">
+            <tr
+              className="border-b"
+              style={{ borderColor: 'var(--border-default)', backgroundColor: 'var(--bg-tertiary)' }}
+            >
+              <th
+                className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider w-24"
+                style={{ color: 'var(--text-muted)' }}
+              >
                 Risk
               </th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+              <th
+                className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+                style={{ color: 'var(--text-muted)' }}
+              >
                 Area
               </th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+              <th
+                className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+                style={{ color: 'var(--text-muted)' }}
+              >
                 Reason
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-            {sorted.map((risk, i) => (
-              <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+          <tbody style={{ borderColor: 'var(--border-default)' }}>
+            {sorted.map((risk, index) => (
+              <tr
+                key={index}
+                className="border-b last:border-b-0"
+                style={{
+                  borderColor: 'var(--border-default)',
+                  backgroundColor: index % 2 === 0 ? 'var(--bg-secondary)' : 'var(--bg-tertiary)',
+                }}
+              >
                 <td className="px-6 py-4">
                   <Badge variant={riskVariant(risk.level)}>{risk.level}</Badge>
                 </td>
                 <td className="px-6 py-4">
-                  <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                  <code
+                    className="rounded px-1.5 py-0.5 text-xs"
+                    style={{
+                      backgroundColor: 'var(--bg-primary)',
+                      color: 'var(--text-secondary)',
+                      fontFamily: 'var(--font-mono)',
+                    }}
+                  >
                     {risk.area}
                   </code>
                 </td>
-                <td className="px-6 py-4 text-slate-600 dark:text-slate-400">{risk.risk}</td>
+                <td className="px-6 py-4" style={{ color: 'var(--text-secondary)' }}>
+                  {risk.risk}
+                </td>
               </tr>
             ))}
           </tbody>

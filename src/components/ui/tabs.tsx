@@ -14,9 +14,13 @@ export function TabsList({ className, children }: TabsListProps) {
   return (
     <RadixTabs.List
       className={cn(
-        "flex gap-1 rounded-[var(--radius-lg)] bg-[var(--color-surface)] p-1 border border-[var(--color-border)]",
+        "flex gap-1 rounded-lg border p-1",
         className,
       )}
+      style={{
+        backgroundColor: 'var(--bg-secondary)',
+        borderColor: 'var(--border-default)',
+      }}
     >
       {children}
     </RadixTabs.List>

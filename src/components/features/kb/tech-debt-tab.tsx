@@ -15,15 +15,21 @@ export function TechDebtTab({ site }: TechDebtTabProps) {
   );
 
   return (
-    <div className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
-      <div className="border-b border-slate-200 bg-slate-50 px-6 py-3 dark:border-slate-700 dark:bg-slate-800">
+    <div
+      className="overflow-hidden rounded-lg border"
+      style={{ borderColor: 'var(--border-default)', backgroundColor: 'var(--bg-secondary)' }}
+    >
+      <div
+        className="border-b px-6 py-3"
+        style={{ borderColor: 'var(--border-default)', backgroundColor: 'var(--bg-tertiary)' }}
+      >
         <div className="flex flex-wrap gap-3 text-xs">
           {(["critical", "high", "medium", "low"] as TechDebtSeverity[]).map((s) => {
             const count = site.techDebt.filter((d) => d.severity === s).length;
             return count > 0 ? (
               <span key={s} className="flex items-center gap-1.5">
                 <Badge variant={s}>{s}</Badge>
-                <span className="text-slate-500">{count}</span>
+                <span style={{ color: 'var(--text-muted)' }}>{count}</span>
               </span>
             ) : null;
           })}
@@ -31,27 +37,55 @@ export function TechDebtTab({ site }: TechDebtTabProps) {
       </div>
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-slate-100 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-800/50">
-            <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 w-20">
+          <tr
+            className="border-b"
+            style={{ borderColor: 'var(--border-default)', backgroundColor: 'var(--bg-tertiary)' }}
+          >
+            <th
+              className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider w-24"
+              style={{ color: 'var(--text-muted)' }}
+            >
               Severity
             </th>
-            <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <th
+              className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+              style={{ color: 'var(--text-muted)' }}
+            >
               Issue
             </th>
-            <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 hidden md:table-cell">
+            <th
+              className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider hidden md:table-cell"
+              style={{ color: 'var(--text-muted)' }}
+            >
               Location
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-          {sorted.map((debt, i) => (
-            <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+        <tbody style={{ borderColor: 'var(--border-default)' }}>
+          {sorted.map((debt, index) => (
+            <tr
+              key={index}
+              className="border-b last:border-b-0"
+              style={{
+                borderColor: 'var(--border-default)',
+                backgroundColor: index % 2 === 0 ? 'var(--bg-secondary)' : 'var(--bg-tertiary)',
+              }}
+            >
               <td className="px-6 py-4">
                 <Badge variant={debt.severity}>{debt.severity}</Badge>
               </td>
-              <td className="px-6 py-4 text-slate-700 dark:text-slate-300">{debt.issue}</td>
+              <td className="px-6 py-4" style={{ color: 'var(--text-secondary)' }}>
+                {debt.issue}
+              </td>
               <td className="px-6 py-4 hidden md:table-cell">
-                <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+                <code
+                  className="rounded px-1.5 py-0.5 text-xs"
+                  style={{
+                    backgroundColor: 'var(--bg-primary)',
+                    color: 'var(--text-secondary)',
+                    fontFamily: 'var(--font-mono)',
+                  }}
+                >
                   {debt.location}
                 </code>
               </td>
