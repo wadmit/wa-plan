@@ -1,58 +1,116 @@
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { PHASES, PROBLEM_AREAS } from "@/data/roadmap";
 
-const PHASE_DAY_LABELS = PHASES.map((p) => p.days);
+interface BoardViewProps {
+  readonly audienceView?: "business" | "engineering" | "full";
+}
 
-export function BoardView() {
+const COLOR_MAP: Record<string, string> = {
+  indigo: "#4F6EF7",
+  blue: "#3B82F6",
+  cyan: "#06B6D4",
+  violet: "#8B5CF6",
+  purple: "#A855F7",
+  rose: "#F43F5E",
+};
+
+export function BoardView({ audienceView = "full" }: BoardViewProps) {
   return (
     <div className="grid gap-4 lg:grid-cols-3 xl:grid-cols-6">
       {PHASES.map((phase) => {
         const phaseProblems = PROBLEM_AREAS.filter((p) => p.phase === phase.days);
+        const accentColor = COLOR_MAP[phase.color] ?? COLOR_MAP.indigo;
+
+        // Filter content based on audience view
+        const showDeliverables = audienceView === "engineering" || audienceView === "full";
+        const showBusinessContent = audienceView === "business" || audienceView === "full";
+
         return (
           <div key={phase.id} className="flex flex-col gap-3">
-            <div className="rounded-lg border border-slate-200 bg-slate-100 px-3 py-2 dark:border-slate-700 dark:bg-slate-800">
-              <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">{phase.days}</p>
-              <p className="text-sm font-bold text-slate-900 dark:text-slate-100">{phase.focus}</p>
-              <p className="text-xs text-slate-500">{phaseProblems.length} item{phaseProblems.length !== 1 ? "s" : ""}</p>
+            {/* Column Header */}
+            <div
+              className="rounded-lg border px-3 py-2"
+              style={{
+                borderColor: accentColor,
+                borderLeftWidth: "3px",
+                backgroundColor: 'var(--color-surface)',
+              }}
+            >
+              <p className="text-xs font-semibold" style={{ color: 'var(--color-text-dim)' }}>
+                {phase.days}
+              </p>
+              <p className="text-sm font-bold" style={{ color: 'var(--color-text-primary)' }}>
+                {phase.focus}
+              </p>
+              <p className="text-xs" style={{ color: 'var(--color-text-dim)' }}>
+                {phaseProblems.length} item{phaseProblems.length !== 1 ? "s" : ""}
+              </p>
             </div>
+
+            {/* Cards */}
             <div className="space-y-2">
               {phaseProblems.map((problem) => (
-                <Card key={problem.id} className="border-slate-200 shadow-none dark:border-slate-700">
-                  <CardHeader className="pb-2 pt-4">
-                    <div className="mb-1 flex items-center justify-between">
-                      <span className="text-xs text-slate-400">#{problem.id}</span>
-                      <Badge
-                        variant={
-                          problem.priority === "critical"
-                            ? "critical"
-                            : problem.priority === "high"
-                              ? "high"
-                              : problem.priority === "medium"
-                                ? "medium"
-                                : "low"
-                        }
-                      >
-                        {problem.priority}
-                      </Badge>
-                    </div>
-                    <CardTitle className="text-sm leading-snug">{problem.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-3">{problem.summary}</p>
-                    {problem.doFirst && (
-                      <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-semibold text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400">
-                        ⚡ Do First
-                      </span>
-                    )}
-                  </CardContent>
-                </Card>
-              ))}
-              {phase.deliverables.filter((d) => !phaseProblems.some((p) => p.keyActions.includes(d))).map((d) => (
-                <div key={d} className="rounded-lg border border-dashed border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-800/50">
-                  <p className="text-xs text-slate-600 dark:text-slate-400">{d}</p>
+                <div
+                  key={problem.id}
+                  className="rounded-lg border p-3"
+                  style={{
+                    borderColor: 'var(--color-border)',
+                    backgroundColor: 'var(--color-surface)',
+                  }}
+                >
+                  <div className="mb-2 flex items-center justify-between">
+                    <span className="text-xs" style={{ color: 'var(--color-text-dim)' }}>#{problem.id}</span>
+                    <Badge
+                      variant={
+                        problem.priority === "critical"
+                          ? "critical"
+                          : problem.priority === "high"
+                            ? "high"
+                            : problem.priority === "medium"
+                              ? "medium"
+                              : "low"
+                      }
+                    >
+                      {problem.priority}
+                    </Badge>
+                  </div>
+                  <h4 className="mb-2 text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>
+                    {problem.title}
+                  </h4>
+                  {showBusinessContent && (
+                    <p className="text-xs line-clamp-3" style={{ color: 'var(--color-text-secondary)' }}>
+                      {problem.summary}
+                    </p>
+                  )}
+                  {problem.doFirst && (
+                    <span
+                      className="mt-2 inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs font-semibold"
+                      style={{
+                        backgroundColor: 'rgba(79, 110, 247, 0.2)',
+                        color: 'var(--color-accent)',
+                      }}
+                    >
+                      ⚡ Do First
+                    </span>
+                  )}
                 </div>
               ))}
+
+              {showDeliverables && phase.deliverables
+                .filter((d) => !phaseProblems.some((p) => p.keyActions.includes(d)))
+                .map((d) => (
+                  <div
+                    key={d}
+                    className="rounded-lg border border-dashed p-3"
+                    style={{
+                      borderColor: 'var(--color-border)',
+                      backgroundColor: 'var(--color-surface)',
+                      opacity: 0.7,
+                    }}
+                  >
+                    <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>{d}</p>
+                  </div>
+                ))}
             </div>
           </div>
         );

@@ -8,7 +8,7 @@ import type { Site, SiteStatus } from "@/types/site";
 
 function statusVariant(s: SiteStatus): "success" | "default" | "medium" | "outline" {
   if (s === "Mature" || s === "Active") return "success";
-  if (s === "Partially Mocked") return "medium";
+  if (s === "In Progress — Backend Incomplete") return "medium";
   if (s === "Early Stage") return "outline";
   return "default";
 }

@@ -1,5 +1,5 @@
 export type TechDebtSeverity = "critical" | "high" | "medium" | "low";
-export type SiteStatus = "Mature" | "Active" | "Early Stage" | "Partially Mocked" | "Experimental";
+export type SiteStatus = "Active" | "In Progress — Backend Incomplete" | "Mature" | "Early Stage";
 
 export interface SiteModule {
   readonly name: string;
@@ -16,7 +16,7 @@ export interface TechDebt {
 export interface RiskArea {
   readonly area: string;
   readonly risk: string;
-  readonly level: "critical" | "high" | "medium";
+  readonly level: "critical" | "high" | "medium" | "low";
 }
 
 export interface FeatureItem {
@@ -25,11 +25,22 @@ export interface FeatureItem {
   readonly notes?: string;
 }
 
+export interface Enhancement {
+  readonly name: string;
+  readonly status: "planned" | "in-progress" | "ready";
+  readonly businessValue: string;
+  readonly technicalScope: string;
+  readonly dependencies: readonly string[];
+  readonly riskLevel: "low" | "medium" | "high";
+  readonly humanControlRule?: string;
+}
+
 export interface Site {
   readonly id: string;
   readonly name: string;
   readonly url: string;
   readonly purpose: string;
+  readonly plainEnglishPurpose?: string;
   readonly status: SiteStatus;
   readonly techStack: readonly string[];
   readonly framework: string;
@@ -43,4 +54,6 @@ export interface Site {
   readonly needsRefactorFirst: readonly string[];
   readonly moduleCount: number;
   readonly techDebtCount: number;
+  readonly businessOwner?: string;
+  readonly primaryAffectedPhases?: readonly string[];
 }

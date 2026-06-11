@@ -1,78 +1,202 @@
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, AlertCircle, Target, Users, Link2, TrendingUp, Shield } from "lucide-react";
 import { PHASES } from "@/data/roadmap";
-import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
-const COLOR_MAP: Record<string, { border: string; bg: string; text: string; dot: string }> = {
-  indigo: {
-    border: "border-indigo-200 dark:border-indigo-800",
-    bg: "bg-indigo-50 dark:bg-indigo-950/40",
-    text: "text-indigo-700 dark:text-indigo-300",
-    dot: "bg-indigo-600",
-  },
-  blue: {
-    border: "border-blue-200 dark:border-blue-800",
-    bg: "bg-blue-50 dark:bg-blue-950/40",
-    text: "text-blue-700 dark:text-blue-300",
-    dot: "bg-blue-600",
-  },
-  cyan: {
-    border: "border-cyan-200 dark:border-cyan-800",
-    bg: "bg-cyan-50 dark:bg-cyan-950/40",
-    text: "text-cyan-700 dark:text-cyan-300",
-    dot: "bg-cyan-600",
-  },
-  violet: {
-    border: "border-violet-200 dark:border-violet-800",
-    bg: "bg-violet-50 dark:bg-violet-950/40",
-    text: "text-violet-700 dark:text-violet-300",
-    dot: "bg-violet-600",
-  },
-  purple: {
-    border: "border-purple-200 dark:border-purple-800",
-    bg: "bg-purple-50 dark:bg-purple-950/40",
-    text: "text-purple-700 dark:text-purple-300",
-    dot: "bg-purple-600",
-  },
-  rose: {
-    border: "border-rose-200 dark:border-rose-800",
-    bg: "bg-rose-50 dark:bg-rose-950/40",
-    text: "text-rose-700 dark:text-rose-300",
-    dot: "bg-rose-600",
-  },
+interface TimelineViewProps {
+  readonly audienceView?: "business" | "engineering" | "full";
+}
+
+const COLOR_MAP: Record<string, { border: string; accent: string; bg: string }> = {
+  indigo: { border: "#4F6EF7", accent: "#4F6EF7", bg: "rgba(79, 110, 247, 0.08)" },
+  blue: { border: "#3B82F6", accent: "#3B82F6", bg: "rgba(59, 130, 246, 0.08)" },
+  cyan: { border: "#06B6D4", accent: "#06B6D4", bg: "rgba(6, 182, 212, 0.08)" },
+  violet: { border: "#8B5CF6", accent: "#8B5CF6", bg: "rgba(139, 92, 246, 0.08)" },
+  purple: { border: "#A855F7", accent: "#A855F7", bg: "rgba(168, 85, 247, 0.08)" },
+  rose: { border: "#F43F5E", accent: "#F43F5E", bg: "rgba(244, 63, 94, 0.08)" },
 };
 
-export function TimelineView() {
+const STATUS_CONFIG = {
+  current: { badge: "Current", variant: "accent" as const },
+  upcoming: { badge: "Upcoming", variant: "outline" as const },
+  complete: { badge: "Complete", variant: "success" as const },
+  "at-risk": { badge: "At Risk", variant: "warning" as const },
+};
+
+export function TimelineView({ audienceView = "full" }: TimelineViewProps) {
   return (
-    <div className="relative">
-      <div className="absolute left-4 top-0 h-full w-0.5 bg-slate-200 dark:bg-slate-700 lg:hidden" />
-      <div className="grid gap-0 lg:grid-cols-6 lg:gap-4">
-        {PHASES.map((phase, index) => {
-          const colors = COLOR_MAP[phase.color] ?? COLOR_MAP.indigo;
-          return (
-            <div key={phase.id} className="relative flex gap-4 lg:flex-col lg:gap-0">
-              <div className="relative z-10 flex flex-col items-center lg:items-start">
-                <div className={cn("flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white", colors.dot)}>
+    <div className="space-y-6">
+      {PHASES.map((phase, index) => {
+        const colors = COLOR_MAP[phase.color] ?? COLOR_MAP.indigo;
+        const status = STATUS_CONFIG[phase.status];
+
+        return (
+          <div
+            key={phase.id}
+            className="rounded-lg border p-5"
+            style={{
+              borderColor: colors.border,
+              borderLeftWidth: "3px",
+              backgroundColor: colors.bg,
+            }}
+          >
+            {/* Header */}
+            <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div
+                  className="flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold"
+                  style={{ backgroundColor: colors.accent, color: '#0B0F1A' }}
+                >
                   {index + 1}
                 </div>
-                <div className="mt-1 h-full w-0.5 bg-slate-200 dark:bg-slate-700 lg:hidden" />
-              </div>
-              <div className={cn("mb-8 flex-1 rounded-xl border p-4 lg:mb-0 lg:mt-4", colors.border, colors.bg)}>
-                <p className={cn("text-xs font-semibold uppercase tracking-wider", colors.text)}>{phase.days}</p>
-                <h3 className="mt-1 text-sm font-bold text-slate-900 dark:text-slate-100">{phase.label}</h3>
-                <p className="mb-3 text-xs text-slate-500 dark:text-slate-400">{phase.focus}</p>
-                <ul className="space-y-1.5">
-                  {phase.deliverables.map((d) => (
-                    <li key={d} className="flex items-start gap-1.5 text-xs text-slate-700 dark:text-slate-300">
-                      <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-slate-400" />
-                      {d}
-                    </li>
-                  ))}
-                </ul>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 style={{ color: 'var(--color-text-primary)' }} className="font-bold">
+                      {phase.label}
+                    </h3>
+                    <Badge variant={status.variant}>{status.badge}</Badge>
+                  </div>
+                  <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+                    {phase.days} · {phase.focus}
+                  </p>
+                </div>
               </div>
             </div>
-          );
-        })}
-      </div>
+
+            {/* Why it exists - always shown */}
+            <div className="mb-4 rounded-md p-3" style={{ backgroundColor: 'var(--color-surface)' }}>
+              <p className="text-sm italic" style={{ color: 'var(--color-text-secondary)' }}>
+                {phase.whyItExists}
+              </p>
+            </div>
+
+            {/* Business View Content */}
+            {(audienceView === "business" || audienceView === "full") && (
+              <div className="mb-4">
+                <div className="mb-3 flex items-center gap-2">
+                  <Target className="h-4 w-4" style={{ color: 'var(--color-accent-warm)' }} />
+                  <h4 className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>
+                    Business Objective
+                  </h4>
+                </div>
+                <p className="mb-3 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+                  {phase.businessObjective}
+                </p>
+
+                {phase.keyOutcomes.length > 0 && (
+                  <div className="mb-3">
+                    <h5 className="mb-2 text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--color-text-dim)' }}>
+                      Key Outcomes
+                    </h5>
+                    <ul className="space-y-1">
+                      {phase.keyOutcomes.map((outcome) => (
+                        <li key={outcome} className="flex items-start gap-2 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+                          <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color: 'var(--color-success)' }} />
+                          {outcome}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {phase.successMetrics.length > 0 && (
+                  <div className="mb-3">
+                    <h5 className="mb-2 text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--color-text-dim)' }}>
+                      Success Metrics
+                    </h5>
+                    <ul className="space-y-1">
+                      {phase.successMetrics.map((metric) => (
+                        <li key={metric} className="flex items-start gap-2 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+                          <TrendingUp className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color: 'var(--color-accent)' }} />
+                          {metric}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {phase.risks.length > 0 && (
+                  <div>
+                    <h5 className="mb-2 text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--color-text-dim)' }}>
+                      Risks
+                    </h5>
+                    <ul className="space-y-1">
+                      {phase.risks.map((risk) => (
+                        <li key={risk} className="flex items-start gap-2 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+                          <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color: 'var(--color-accent-warm)' }} />
+                          {risk}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Engineering View Content */}
+            {(audienceView === "engineering" || audienceView === "full") && (
+              <div>
+                <div className="mb-3 flex items-center gap-2">
+                  <Users className="h-4 w-4" style={{ color: 'var(--color-accent)' }} />
+                  <h4 className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>
+                    Technical Details
+                  </h4>
+                </div>
+
+                <div className="mb-3 flex flex-wrap items-center gap-2">
+                  <span className="text-xs" style={{ color: 'var(--color-text-dim)' }}>Owner:</span>
+                  <span className="text-xs font-medium" style={{ color: 'var(--color-text-secondary)' }}>{phase.ownerTeam}</span>
+                </div>
+
+                {phase.dependencies.length > 0 && (
+                  <div className="mb-3">
+                    <h5 className="mb-2 flex items-center gap-1 text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--color-text-dim)' }}>
+                      <Link2 className="h-3 w-3" />
+                      Dependencies
+                    </h5>
+                    <ul className="space-y-1">
+                      {phase.dependencies.map((dep) => (
+                        <li key={dep} className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>
+                          {dep}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                <div className="mb-3">
+                  <h5 className="mb-2 text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--color-text-dim)' }}>
+                    Deliverables
+                  </h5>
+                  <ul className="space-y-1">
+                    {phase.deliverables.map((d) => (
+                      <li key={d} className="flex items-start gap-2 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+                        <Shield className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color: 'var(--color-accent)' }} />
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {phase.acceptanceCriteria.length > 0 && (
+                  <div>
+                    <h5 className="mb-2 text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--color-text-dim)' }}>
+                      Acceptance Criteria
+                    </h5>
+                    <ul className="space-y-1">
+                      {phase.acceptanceCriteria.map((criteria) => (
+                        <li key={criteria} className="flex items-start gap-2 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+                          <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color: 'var(--color-success)' }} />
+                          {criteria}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }

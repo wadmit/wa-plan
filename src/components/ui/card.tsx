@@ -5,9 +5,32 @@ interface CardProps {
   readonly children: React.ReactNode;
 }
 
+interface AccentCardProps extends CardProps {
+  readonly accentColor?: string;
+}
+
 export function Card({ className, children }: CardProps) {
   return (
-    <div className={cn("rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800", className)}>
+    <div
+      className={cn(
+        "rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-sm transition-colors hover:bg-[var(--color-surface-hover)]",
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+}
+
+export function AccentCard({ className, children, accentColor = "var(--color-accent)" }: AccentCardProps) {
+  return (
+    <div
+      className={cn(
+        "rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-sm transition-colors hover:bg-[var(--color-surface-hover)]",
+        className,
+      )}
+      style={{ borderLeftWidth: "2px", borderLeftColor: accentColor }}
+    >
       {children}
     </div>
   );
@@ -18,11 +41,11 @@ export function CardHeader({ className, children }: CardProps) {
 }
 
 export function CardTitle({ className, children }: CardProps) {
-  return <h3 className={cn("text-lg font-semibold text-slate-900 dark:text-slate-100", className)}>{children}</h3>;
+  return <h3 className={cn("text-lg font-semibold text-[var(--color-text-primary)]", className)}>{children}</h3>;
 }
 
 export function CardDescription({ className, children }: CardProps) {
-  return <p className={cn("text-sm text-slate-500 dark:text-slate-400", className)}>{children}</p>;
+  return <p className={cn("text-sm text-[var(--color-text-secondary)]", className)}>{children}</p>;
 }
 
 export function CardContent({ className, children }: CardProps) {

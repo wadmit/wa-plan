@@ -4,27 +4,97 @@ import { ROUTES } from "@/constants/routes";
 
 export function HeroSection() {
   return (
-    <div className="relative overflow-hidden border-b border-slate-200 bg-linear-to-br from-indigo-900 via-indigo-800 to-violet-900 px-4 py-20 text-white dark:border-slate-700 sm:px-6 lg:px-8">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(99,102,241,0.3),transparent_60%)]" />
-      <div className="relative mx-auto max-w-4xl text-center">
-        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-indigo-500/40 bg-indigo-500/20 px-3 py-1 text-xs font-medium text-indigo-200">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-indigo-400" />
+    <div
+      className="relative overflow-hidden border-b px-4 py-20 sm:px-6 lg:px-8"
+      style={{
+        backgroundColor: '#0B0F1A',
+        borderColor: 'var(--color-border)',
+      }}
+    >
+      {/* Gradient overlay */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(ellipse at top right, rgba(79, 110, 247, 0.15) 0%, transparent 60%)',
+        }}
+      />
+
+      {/* Content */}
+      <div className="relative mx-auto max-w-5xl text-center">
+        {/* Confidential badge */}
+        <div
+          className="mb-6 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium"
+          style={{
+            borderColor: 'rgba(79, 110, 247, 0.4)',
+            backgroundColor: 'rgba(79, 110, 247, 0.15)',
+            color: '#8892B0',
+          }}
+        >
+          <span
+            className="h-1.5 w-1.5 animate-pulse rounded-full"
+            style={{ backgroundColor: 'var(--color-accent)' }}
+          />
           Internal — Confidential
         </div>
-        <h1 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-          WiseAdmit <span className="text-indigo-300">HQ</span>
+
+        {/* Title */}
+        <h1
+          className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl"
+          style={{ color: 'var(--color-text-primary)' }}
+        >
+          WiseAdmit{" "}
+          <span style={{ color: 'var(--color-accent)' }}>HQ</span>
         </h1>
-        <p className="mx-auto mb-3 max-w-2xl text-xl text-indigo-100">
-          What we're building next — and where everything stands today.
+
+        {/* Dual audience subtitle */}
+        <p
+          className="mx-auto mb-8 max-w-3xl text-lg"
+          style={{ color: 'var(--color-text-secondary)' }}
+        >
+          Product operations hub for the WiseAdmit platform
         </p>
-        <p className="mx-auto mb-10 max-w-2xl text-base text-indigo-200/80">
-          A single source of truth for the business team and engineering. Browse the 90-day roadmap
-          or dive into technical intelligence reports for all 8 WiseAdmit sites.
-        </p>
+
+        {/* Two ways to read this site */}
+        <div className="mx-auto mb-12 grid max-w-4xl gap-4 sm:grid-cols-2">
+          <div
+            className="rounded-lg border p-4 text-left"
+            style={{
+              borderColor: 'var(--color-border)',
+              backgroundColor: 'var(--color-surface)',
+            }}
+          >
+            <p className="mb-2 font-semibold" style={{ color: 'var(--color-text-primary)' }}>
+              For Business Team
+            </p>
+            <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+              See what's shipping, when, and what has been deliberately left out.
+            </p>
+          </div>
+          <div
+            className="rounded-lg border p-4 text-left"
+            style={{
+              borderColor: 'var(--color-border)',
+              backgroundColor: 'var(--color-surface)',
+            }}
+          >
+            <p className="mb-2 font-semibold" style={{ color: 'var(--color-text-primary)' }}>
+              For Engineering
+            </p>
+            <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+              Jump to module maps, technical liabilities, enhancement queues, and phase dependencies.
+            </p>
+          </div>
+        </div>
+
+        {/* CTAs */}
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link
             href={ROUTES.ROADMAP}
-            className="flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-indigo-900 shadow-lg transition-all hover:bg-indigo-50 hover:shadow-xl"
+            className="flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold shadow-lg transition-all hover:shadow-xl"
+            style={{
+              backgroundColor: 'var(--color-accent)',
+              color: '#0B0F1A',
+            }}
           >
             <Map className="h-4 w-4" />
             View 90-Day Roadmap
@@ -32,7 +102,12 @@ export function HeroSection() {
           </Link>
           <Link
             href={ROUTES.KB}
-            className="flex items-center gap-2 rounded-xl border border-indigo-400/50 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20"
+            className="flex items-center gap-2 rounded-lg border px-6 py-3 text-sm font-semibold transition-all"
+            style={{
+              borderColor: 'var(--color-border)',
+              backgroundColor: 'var(--color-surface)',
+              color: 'var(--color-text-primary)',
+            }}
           >
             <BookOpen className="h-4 w-4" />
             Explore Knowledge Base

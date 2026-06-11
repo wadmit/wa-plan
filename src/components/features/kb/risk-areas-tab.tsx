@@ -2,7 +2,7 @@ import { ShieldAlert } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { Site } from "@/types/site";
 
-function riskVariant(level: "critical" | "high" | "medium"): "critical" | "high" | "medium" {
+function riskVariant(level: "critical" | "high" | "medium" | "low"): "critical" | "high" | "medium" | "low" {
   return level;
 }
 
@@ -12,7 +12,7 @@ interface RiskAreasTabProps {
 
 export function RiskAreasTab({ site }: RiskAreasTabProps) {
   const sorted = [...site.riskAreas].sort((a, b) => {
-    const order = { critical: 0, high: 1, medium: 2 };
+    const order = { critical: 0, high: 1, medium: 2, low: 3 };
     return order[a.level] - order[b.level];
   });
 

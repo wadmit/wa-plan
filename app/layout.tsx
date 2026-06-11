@@ -5,14 +5,14 @@ import { SiteHeader } from "@/components/common/site-header";
 import { SiteFooter } from "@/components/common/site-footer";
 
 export const metadata: Metadata = {
-  title: "WiseAdmit HQ — Knowledge Base & Roadmap",
-  description: "Internal knowledge base and 90-day roadmap for the WiseAdmit platform.",
+  title: "WiseAdmit HQ — Product Planning Hub",
+  description: "Internal product operations dashboard for business and engineering teams. 90-day roadmap, technical intelligence, and strategic planning for the WiseAdmit platform.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="flex min-h-screen flex-col bg-slate-50 dark:bg-slate-950">
+    <html lang="en" className="dark">
+      <body className="flex min-h-screen flex-col" style={{ backgroundColor: '#0B0F1A', color: '#F0F2FF' }}>
         <Providers>
           <SiteHeader />
           <main className="flex-1">{children}</main>

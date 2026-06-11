@@ -253,7 +253,7 @@ export const SITES: readonly Site[] = [
     url: "counsellor.wiseadmit.io",
     purpose:
       "Education counselor dashboard for matching students with educational programs and scholarships, primarily targeting Chinese universities.",
-    status: "Partially Mocked",
+    status: "In Progress — Backend Incomplete",
     framework: "React 18 + Vite",
     architecture: "Frontend SPA, React 18 + Vite, shadcn/ui design system, all API calls currently mocked",
     techStack: [
