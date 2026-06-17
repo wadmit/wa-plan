@@ -210,6 +210,9 @@ Student portal must show: progress bar, missing document checklist, payment remi
 - **Franchise analytics** — Program-wise revenue, student flow, cost analysis, user tracking
 - **Program review feature** — Internal review workflow for programs
 - **Announcement feed** — Partners see WiseAdmit PDFs, updates, and broadcasts inside dashboard
+- **Franchise onboarding + AI call scripting** — Qualifying questions with live reporting, standard operating procedure (SOP) for escalation to admission officers (Sanju / Franchise admission officer) only if qualified
+- **CEO Dashboard** — Consolidated view of all B2C and customer interactions across WiseAdmit
+- **Lead management + AI agent training** — Train WhatsApp/messaging AI agents by capturing all historical questions for better qualification and responses
 
 ---
 
@@ -220,9 +223,9 @@ Student portal must show: progress bar, missing document checklist, payment remi
 | 1–15 | Role + scope + permissions + lead ownership + sidebar by role + basic audit log |
 | 16–30 | Lifecycle stages + lead timeline + SLA rules + Lead Leak Dashboard + alerts |
 | 31–45 | Lead Manager smart views + conversation queues + lead intelligence panel |
-| 46–60 | AI suggestions (summary, reply, next action) + partner accept/reject |
-| 61–75 | Partner Facebook form connect + campaign tracking cleanup + spend import |
-| 76–90 | Marketing ROI dashboard + application stuck dashboard + payment recovery + partner performance score |
+| 46–60 | AI suggestions (summary, reply, next action) + partner accept/reject + AI agent training (capture historical questions) |
+| 61–75 | Partner Facebook form connect + campaign tracking cleanup + spend import + Franchise onboarding + AI call scripting with SOP |
+| 76–90 | Marketing ROI dashboard + CEO Dashboard (consolidated B2C view) + application stuck dashboard + payment recovery + partner performance score |
 
 ---
 

@@ -155,6 +155,7 @@ export const PHASES: readonly Phase[] = [
       "WhatsApp bot interaction auto-summary generation",
       "Slack notifications for bot interactions",
       "AI-suggested next actions from bot conversations",
+      "AI agent training: capture all historical WhatsApp/messaging questions",
     ],
     keyOutcomes: [
       "AI generates conversation summaries automatically",
@@ -200,6 +201,9 @@ export const PHASES: readonly Phase[] = [
       "Invoice system: Admin ↔ Partner bidirectional invoicing",
       "Partner service request system (features, CSCA classes, etc.)",
       "Ticket / support system inside dashboard",
+      "Franchise onboarding + AI call scripting with SOP",
+      "Qualifying questions with live reporting",
+      "Escalation to admission officers (Sanju / Franchise admission officer) only if qualified",
     ],
     keyOutcomes: [
       "Partners connect Facebook forms without technical help",
@@ -236,6 +240,7 @@ export const PHASES: readonly Phase[] = [
     whyItExists: "Leadership needs analytics to make decisions. Operations needs visibility into stuck applications. Students at risk need proactive intervention.",
     deliverables: [
       "Marketing ROI dashboard (best/worst campaigns, cost per stage)",
+      "CEO Dashboard: consolidated view of all B2C and customer interactions",
       "Application Operations Dashboard (docs pending, stuck > 7 days)",
       "Payment recovery automation",
       "Partner performance score",
